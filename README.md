@@ -1,7 +1,5 @@
 # Stanford Events Calendar
 
-**[Live Demo](https://stanford-events.fly.dev)**
-
 A personalized events dashboard for the Stanford community. It fetches events daily, filters them by user preference, and presents them in an interactive calendar and smart-sorted feed.
 
 Live events are fetched from [events.stanford.edu](https://events.stanford.edu) and ranked by relevance.
