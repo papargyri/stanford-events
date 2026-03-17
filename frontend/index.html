@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stanford Sustainability Events</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <link rel="stylesheet" href="style.css?v=1">
+</head>
+
+<body>
+    <div class="app-container">
+
+        <aside class="sidebar" id="sidebar">
+            <div class="logo-area">
+                <h1>Stanford Events</h1>
+                <p class="subtitle">Personalized Event Calendar</p>
+            </div>
+
+            <div class="filter-section">
+                <h3>Event Types</h3>
+                <div class="filter-chips">
+                    <button class="chip active" data-category="type" data-value="All">All Types</button>
+                    <button class="chip" data-category="type" data-value="Lecture/Presentation/Talk">Lectures</button>
+                    <button class="chip" data-category="type" data-value="Conference/Symposium">Conference</button>
+                    <button class="chip" data-category="type" data-value="Class/Seminar">Classes</button>
+                    <button class="chip" data-category="type" data-value="PhD Defense">PhD Defense</button>
+                    <button class="chip" data-category="type" data-value="Exhibition">Exhibitions</button>
+                    <button class="chip" data-category="type" data-value="Tour">Tours</button>
+                    <button class="chip" data-category="type" data-value="Film/Screening">Film Screening</button>
+                    <button class="chip" data-category="type" data-value="Performance">Performances</button>
+                    <button class="chip" data-category="type" data-value="Workshop/Training">Workshops</button>
+                    <button class="chip" data-category="type" data-value="Meeting">Meetings</button>
+                    <button class="chip" data-category="type" data-value="Social Event/Reception">Social</button>
+                    <button class="chip" data-category="type" data-value="Event">Other Events</button>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Location</h3>
+                <div class="filter-chips">
+                    <button class="chip active" data-category="location" data-value="All">Anywhere</button>
+                    <button class="chip" data-category="location" data-value="Physical">Physical Campus</button>
+                    <button class="chip" data-category="location" data-value="Virtual">Online / Virtual</button>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Sponsor</h3>
+                <div class="filter-chips">
+                    <button class="chip active" data-category="sponsor" data-value="All">All of Stanford</button>
+                    <button class="chip" data-category="sponsor" data-value="Doerr">Stanford Doerr School</button>
+                    <button class="chip" data-category="sponsor" data-value="GSB">Stanford GSB</button>
+                    <button class="chip" data-category="sponsor" data-value="TAPS">Stanford TAPS / Arts</button>
+                    <button class="chip" data-category="sponsor" data-value="Education">School of Education</button>
+                    <button class="chip" data-category="sponsor" data-value="Engineering">School of Engineering</button>
+                    <button class="chip" data-category="sponsor" data-value="Postdoc">Postdoc Office</button>
+                    <button class="chip" data-category="sponsor" data-value="Continuing">Continuing Studies</button>
+                    <button class="chip" data-category="sponsor" data-value="CardinalNights">Cardinal Nights</button>
+                    <button class="chip" data-category="sponsor" data-value="CardinalAtWork">Cardinal at Work</button>
+                    <button class="chip" data-category="sponsor" data-value="CareerEd">Career Education</button>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Perks</h3>
+                <div class="filter-chips">
+                    <button class="chip active" data-category="perks" data-value="All">Any</button>
+                    <button class="chip" data-category="perks" data-value="Free Food">Free Food</button>
+                    <button class="chip" data-category="perks" data-value="Swag">Swag / Merch</button>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Format</h3>
+                <div class="filter-chips">
+                    <button class="chip active" data-category="formats" data-value="All">Any Format</button>
+                    <button class="chip" data-category="formats" data-value="Registration">Registration Required</button>
+                    <button class="chip" data-category="formats" data-value="Drop-in">Drop-in</button>
+                </div>
+            </div>
+
+            <div class="filter-section topic-input-section">
+                <h3>Personalize by Topic</h3>
+                <p class="helper-text">Describe your interests (e.g. "AI, coastal flooding, clean energy")</p>
+                <textarea id="topic-description" rows="3" placeholder="I am interested in..."></textarea>
+                <button id="save-preferences-btn" class="primary-btn">Save Preferences</button>
+                <span id="save-status" class="status-indicator"></span>
+            </div>
+
+            <div class="filter-section">
+                <div id="auth-profile-sidebar"></div>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="theme-switch-wrapper">
+                    <label class="theme-switch" for="theme-toggle">
+                        <input type="checkbox" id="theme-toggle" />
+                        <div class="slider round">
+                            <span class="icon-sun">☀️</span>
+                            <span class="icon-moon">🌙</span>
+                        </div>
+                    </label>
+                    <span class="theme-text">Dark Mode</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content" id="main-content">
+            <!-- Public header: visible when NOT signed in -->
+            <div class="public-header" id="public-header">
+                <h1>Stanford Sustainability Events</h1>
+                <p class="subtitle">Curated events from the Doerr School and across campus</p>
+                <div style="margin-top:1rem;display:flex;justify-content:center;align-items:center;gap:1rem;">
+                    <div id="auth-profile"></div>
+                    <div id="google-signin-btn"></div>
+                </div>
+                <p style="font-size:0.8rem;color:var(--text-secondary);margin-top:0.5rem;">Sign in to personalize your feed, save events, and set preferences</p>
+            </div>
+
+            <!-- Personal header: visible when signed in -->
+            <header class="top-nav" id="personal-header" style="display:none;">
+                <h2>Upcoming Events</h2>
+                <div class="view-tabs">
+                    <button class="view-tab active" id="tab-all-events">All Events</button>
+                    <button class="view-tab" id="tab-interested">My Saved Events</button>
+                </div>
+            </header>
+
+            <!-- Filter tabs for public view -->
+            <div class="view-tabs" id="public-tabs" style="justify-content:center;display:flex;margin-bottom:1rem;">
+                <button class="view-tab active" id="filter-doerr">Doerr School of Sustainability</button>
+                <button class="view-tab" id="filter-all">All Stanford</button>
+            </div>
+
+            <div class="legend" id="color-legend">
+                <span class="legend-item"><span class="legend-dot" style="background:#c4e0ca;border:1px solid #98c8a0"></span> Doerr School</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#c4d8e8;border:1px solid #9bbdd4"></span> GSB</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#e8c4c4;border:1px solid #b07070"></span> Other</span>
+            </div>
+
+            <div class="header-controls">
+                <button id="next-week-btn">Next Week</button>
+                <button id="this-month-btn">This Month</button>
+                <button id="next-month-btn">Next Month</button>
+            </div>
+
+            <section class="calendar-container">
+                <div class="map-header"><h3>Weekly View</h3></div>
+                <div id="calendar" class="calendar-view"></div>
+            </section>
+
+            <section id="event-feed" class="event-feed">
+                <div class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Loading events...</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="auth.js?v=1"></script>
+    <script src="app.js?v=1"></script>
+</body>
+
+</html>
